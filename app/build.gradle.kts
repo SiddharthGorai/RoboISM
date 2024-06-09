@@ -1,11 +1,21 @@
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id ("io.realm.kotlin")
 }
 
 
 android {
+    packaging {
+        resources.excludes.addAll(
+            listOf(
+                "META-INF/DEPENDENCIES",
+                "META-INF/native-image/org.mongodb/bson/native-image.properties"
+        )
+        )
+    }
     namespace = "com.sid.roboism"
     compileSdk = 34
 
@@ -29,11 +39,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         viewBinding = true
@@ -60,8 +70,24 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.19")
 
+    implementation (platform("com.google.firebase:firebase-bom:33.0.0"))
+    implementation ("com.google.firebase:firebase-messaging-ktx") // Add this line
+
     //retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    implementation ("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation ("com.google.auth:google-auth-library-oauth2-http:0.26.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+
+    implementation ("me.biubiubiu.justifytext:library:1.1")
+    implementation("org.mongodb:mongodb-driver-kotlin-coroutine:5.1.0")
+    implementation("org.mongodb:bson-kotlinx:5.1.0")
+
+
+
 }
+
+apply(plugin = "com.google.gms.google-services")

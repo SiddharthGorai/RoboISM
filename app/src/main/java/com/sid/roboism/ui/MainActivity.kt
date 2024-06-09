@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
@@ -24,8 +25,6 @@ import com.sid.roboism.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
-
-    private val topic = "/topics/announcement"
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission(),
@@ -62,7 +61,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.newAnnoucementFragment -> binding.navView.setCheckedItem(R.id.newAnnoucementFragment)
                 R.id.aboutFragment -> binding.navView.setCheckedItem(R.id.aboutFragment)
                 R.id.ourTeamFragment -> binding.navView.setCheckedItem(R.id.ourTeamFragment)
-                R.id.contactFragment -> binding.navView.setCheckedItem(R.id.contactFragment)
 
                 else -> binding.navView.setCheckedItem(R.id.homeFragment)
             }
@@ -77,21 +75,19 @@ class MainActivity : AppCompatActivity() {
                 R.id.newAnnoucementFragment -> "New Announcement"
                 R.id.aboutFragment -> "About Us"
                 R.id.ourTeamFragment -> "Our Team"
-                R.id.contactFragment -> "Contact Us"
                 else -> "Home"
             }
 
         }
 
-        FirebaseMessaging.getInstance().subscribeToTopic(topic).addOnCompleteListener {
-            if (it.isSuccessful) {
-                Log.d("SUBSCRIBE", "subscribed")
-            } else {
-                Log.d("SUBSCRIBE", "subscription failed")
+        FirebaseMessaging.getInstance().subscribeToTopic("notification")
+            .addOnCompleteListener { task ->
+                var msg = "Subscribed to topic"
+                if (!task.isSuccessful) {
+                    msg = "Subscription to topic failed"
+                }
+                Log.d("MainActivity", msg)
             }
-        }.addOnFailureListener {
-        }
-
     }
     private fun askNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

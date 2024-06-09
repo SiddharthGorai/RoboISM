@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.fragment.findNavController
 import com.sid.roboism.R
 import com.sid.roboism.databinding.FragmentHomeBinding
 
@@ -23,6 +25,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        binding.projectsBtn.setOnClickListener{
+           findNavController().navigate(R.id.action_homeFragment_to_projectsFragment)
+        }
         val label = "Welcome to RoboISM_"
         val stringBuilder = StringBuilder()
 

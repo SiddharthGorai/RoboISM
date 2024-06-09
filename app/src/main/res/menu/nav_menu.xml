@@ -52,9 +52,6 @@
             android:id="@+id/ourTeamFragment"
             android:icon="@drawable/ic_coreteam"
             android:title="Our Team" />
-        <item
-            android:id="@+id/contactFragment"
-            android:icon="@drawable/ic_contact"
-            android:title="Contact" />
+
     </group>
 </menu>
